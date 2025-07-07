@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.1'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'info.solidsoft.pitest' version '1.15.0'
+}
+
+group = 'com.fastshop'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.mockito:mockito-core'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+pitest {
+    targetClasses = ['com.fastshop.domain.service.*']
+    excludedClasses = ['com.fastshop.FastShopApplication', '*.dto.*', '*.exception.*']
+    threads = 4
+    outputFormats = ['XML', 'HTML']
+    timestampedReports = false
+    mutationThreshold = 85
+    coverageThreshold = 90
+    timeoutConstInMillis = 4000
+    junit5PluginVersion = '1.2.0'
+    avoidCallsTo = ['java.util.logging', 'org.apache.log4j', 'org.slf4j', 'org.apache.commons.logging']
+    verbose = false
+}
