@@ -35,10 +35,10 @@ pitest {
     threads = 4
     outputFormats = ['XML', 'HTML']
     timestampedReports = false
-    mutationThreshold = 50
-    coverageThreshold = 50
+    mutationThreshold = 85
+    coverageThreshold = 90
     timeoutConstInMillis = 4000
     junit5PluginVersion = '1.2.0'
     avoidCallsTo = ['java.util.logging', 'org.apache.log4j', 'org.slf4j', 'org.apache.commons.logging']
-    verbose = true
+    verbose = false
 }
