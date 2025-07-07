@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.1'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'info.solidsoft.pitest' version '1.15.0'
 }
 
 group = 'com.fastshop'
@@ -26,4 +27,18 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+pitest {
+    targetClasses = ['com.fastshop.domain.service.*']
+    excludedClasses = ['com.fastshop.FastShopApplication', '*.dto.*', '*.exception.*']
+    threads = 4
+    outputFormats = ['XML', 'HTML']
+    timestampedReports = false
+    mutationThreshold = 50
+    coverageThreshold = 50
+    timeoutConstInMillis = 4000
+    junit5PluginVersion = '1.2.0'
+    avoidCallsTo = ['java.util.logging', 'org.apache.log4j', 'org.slf4j', 'org.apache.commons.logging']
+    verbose = true
 }
